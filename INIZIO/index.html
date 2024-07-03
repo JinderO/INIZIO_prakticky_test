@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google vyhledávač</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        
+        
+        // 1. Nastavení API klíče a Custom Search Engine ID
+        const apiKey = 'AIzaSyBFpJ5Iy1tDr6Tso9Sxhnq6p-uZI8kkoKU'; // API klíč pro Google Custom Search API
+        const cx = '727b96d2c5ff644c9'; // ID vlastní vyhledávacího stroje 
+
+        // 2. Funkce pro vyhledávání na Google pomocí Custom Search API
+        async function searchGoogle(query) {
+            const response = await fetch(`https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${query}`);
+            const data = await response.json();
+            return data.items; // Vrácení pole výsledků hledání
+        }
+
+        // 3. Funkce pro zobrazení výsledků vyhledávání a jejich uložení
+        function displayResults(results) {
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = ''; // Vyprázdnění kontejneru pro nové výsledky
+            results.forEach(result => {
+                const resultDiv = document.createElement('div');
+                resultDiv.innerHTML = `
+                    <h3><a href="${result.link}" target="_blank">${result.title}</a></h3>
+                    <p>${result.snippet}</p>
+                `;
+                resultsContainer.appendChild(resultDiv); // Přidání divu do kontejneru výsledků
+            });
+        }
+
+        function saveResults(results) {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(results));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "google_search_results.json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click(); // Simulace kliknutí pro stažení souboru
+            downloadAnchorNode.remove();
+        }
+
+        // 4. Hlavní funkce pro zpracování vyhledávacího dotazu uživatele
+        async function handleSearch() {
+            const query = document.getElementById('query').value; // Získání dotazu z textového pole
+            const results = await searchGoogle(query); // Vyhledání na Google a získání výsledků
+            displayResults(results); // Zobrazení výsledků na webové stránce
+            document.getElementById('saveButton').onclick = () => saveResults(results); // Uložení výsledků při kliknutí na tlačítko
+        }
+    
+
+
+    </script>
+</head>
+
+<body>
+    <!-- IMPUT a BUTTONY -->
+    <div class="container"> 
+        <div><h1 id="title">Google search</h1></div>
+        <div>
+            <input type="text" id="query" placeholder="Zadejte text">
+            <button onclick="handleSearch()">Vyhledat</button>
+            <button id="saveButton">Uložit výsledky</button>
+        </div>  
+    <div id="results"></div>
+    </div>  
+</body>
+</html>

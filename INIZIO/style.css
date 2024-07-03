@@ -1,0 +1,58 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif ;
+} 
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 5%;
+  background-image: linear-gradient(rgba(0, 53, 9, 0.8),rgba(0,53,9,0.8)), url(images/thomas-griesbeck-BS-Uxe8wU5Y-unsplash.jpg);
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#title {
+  /*position: absolute; 
+  top: 200px; */
+  display: flex;
+  font-size: 6.5em;
+  color: white;
+  padding-bottom: 150px;
+}
+
+input {
+  display: flex;
+  width: 100%;
+  max-width: 700px;
+  height: 50px;
+  border-radius: 15px;
+  font-size: 1.8em;
+  padding: 15px;
+} 
+
+button {
+  font-size: 2em;
+  width: 200px;
+  margin: 10px;
+} 
+
+#saveButton{
+  width: 300px;
+}
+
+#results {
+  margin-top: 50px;
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  padding: 15px;
+}
+
